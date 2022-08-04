@@ -31,7 +31,7 @@ jobs:
       - id: prep
         run: |
           TAG=$(echo $GITHUB_SHA | head -c7)
-          IMAGE="${{ secrets.REGISTRY_URL }}/abraham-ai/abraham-${{ secrets.ENV }}"
+          IMAGE="${{ secrets.REGISTRY_URL }}/abraham-ai/eden-${{ secrets.ENV }}"
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
           echo ::set-output name=tag::${TAG}
           echo ::set-output name=image::${IMAGE}
@@ -102,7 +102,7 @@ jobs:
           echo "STEP_START=$(date +%s)" >> $GITHUB_ENV
       - id: prep
         run: |
-          IMAGE="${{ secrets.REGISTRY_URL }}/abraham-ai/abraham-${{ secrets.ENV }}"
+          IMAGE="${{ secrets.REGISTRY_URL }}/abraham-ai/eden-${{ secrets.ENV }}"
           echo ::set-output name=tagged_image::${IMAGE}:${{ needs.build.outputs.tag }}
           echo ::set-output name=tag::${{ needs.build.outputs.tag }}
           echo ::set-output name=image::${IMAGE}
@@ -115,7 +115,7 @@ jobs:
       - name: Bump Env
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: "apps/abraham/abraham-prod-environments/values.yaml"
+          valueFile: "apps/eden/eden-prod-environments/values.yaml"
           updateFile: true
           propertyPath: "$.environments[?(@.name=='${{ secrets.ENV }}')].image"
           value: ${{ steps.prep.outputs.tagged_image }}
