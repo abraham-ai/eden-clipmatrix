@@ -24,8 +24,8 @@ RUN apt install -y libgl1-mesa-glx git wget zip libglib2.0-0 curl libsuitesparse
 RUN pip install --upgrade pip
 RUN pip install --no-deps ftfy regex tqdm
 #RUN pip install scikit-sparse largesteps
-largesteps
-RUN pip install pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py37_cu111_pyt190/download.htmlp
+#largesteps
+RUN pip install pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py37_cu111_pyt190/download.html
 
 # copy the content of the local src directory to the working directory
 WORKDIR /usr/local/eden
