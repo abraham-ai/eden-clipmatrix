@@ -21,22 +21,28 @@ RUN apt-get -y update \
 RUN apt-get -y update
 RUN apt install -y libgl1-mesa-glx git wget zip libglib2.0-0 curl libsuitesparse-dev
 
-RUN pip install --upgrade pip
-RUN pip install --no-deps ftfy regex tqdm
-#RUN pip install scikit-sparse largesteps
-#largesteps
-RUN pip install pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py37_cu111_pyt190/download.html
-
 # copy the content of the local src directory to the working directory
 WORKDIR /usr/local/eden
 COPY . .
 
-# submodules
-RUN git clone https://github.com/openai/CLIP.git
-#RUN git clone https://github.com/rgl-epfl/large-steps-pytorch.git
+# python libraries
+RUN pip install --upgrade pip
+RUN pip install --no-deps ftfy regex tqdm
+RUN pip install largesteps scikit-image scikit-sparse libsuitesparse-dev scikit-learn
 
-# the line below is commented out because: https://stackoverflow.com/questions/49323225/expose-all-ports-for-a-docker-image/49323975
-# EXPOSE 5656 
+# install pytorch3d from source
+RUN curl -LO https://github.com/NVIDIA/cub/archive/1.10.0.tar.gz
+RUN tar xzf 1.10.0.tar.gz
+RUN CUB_HOME=/cub-1.10.0 pip install git+https://github.com/facebookresearch/pytorch3d.git@stable
+
+# some more dependencies
+RUN git clone https://github.com/openai/CLIP.git
+RUN git clone https://github.com/rgl-epfl/large-steps-pytorch.git
+RUN git clone https://github.com/lessw2020/Ranger21.git
+RUN python -m pip install -e Ranger21/.
+
+# files
+RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1CK2wrRqu94kPy3j4lm70UWaojrjgqO1F' -O model.obj
 
 # command to run on container start
 ENTRYPOINT [ "python3", "server.py" ]
