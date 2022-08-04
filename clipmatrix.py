@@ -62,7 +62,11 @@ headprompt = "head of  "#@param {type:'string'}, ""
 bodyprompt = "torso muscular body of "#@param {type:'string'}, ""
 legprompt = "legs and tail of "#@param {type:'string'}, ""
 
-creatures = ["the red japanese robot ninja"] #@param {type:'raw'}
+#creatures = ["the red japanese robot ninja"] #@param {type:'raw'}
+
+creatures = ["the steampunk robot detective"] #@param {type:'raw'}
+
+
 detail = ["detailed to the maximum","detailed to the maximum","rendered in Unreal Engine"]#@param {type:'raw'}, ""
 styles = ["in super realistic painting style"]#@param {type:'raw'}
 #note: you can also use an image as style -- simply add the image file as prompt.
@@ -2157,10 +2161,10 @@ def save_frames(textures,texturesn,calibrate =None,Ta=None,Sa=None,Ae=None,rev=F
 
             imagesA.append(images_.clamp(0,1).cpu().half())
 
-            if t%60==0:
-                plt.imshow(images_[0,:,:,:3].detach().cpu())
-                plt.title("motion step %s"%(t))
-                plt.show()
+            # if t%60==0:
+            #     plt.imshow(images_[0,:,:,:3].detach().cpu())
+            #     plt.title("motion step %s"%(t))
+            #     plt.show()
     return imagesA,mesh3
 
 def director(final_name,textures,texturesn,Ta = 0.5,Sa=1.35,Ae=0.4,rev=True,imagesA=None):

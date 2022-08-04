@@ -26,23 +26,7 @@ WORKDIR /usr/local/eden
 COPY . .
 
 # python libraries
-RUN pip install --upgrade pip
-RUN pip install --no-deps ftfy regex tqdm
-RUN pip install largesteps scikit-image scikit-sparse libsuitesparse-dev scikit-learn
-
-# install pytorch3d from source
-RUN curl -LO https://github.com/NVIDIA/cub/archive/1.10.0.tar.gz
-RUN tar xzf 1.10.0.tar.gz
-RUN CUB_HOME=/cub-1.10.0 pip install git+https://github.com/facebookresearch/pytorch3d.git@stable
-
-# some more dependencies
-RUN git clone https://github.com/openai/CLIP.git
-RUN git clone https://github.com/rgl-epfl/large-steps-pytorch.git
-RUN git clone https://github.com/lessw2020/Ranger21.git
-RUN python -m pip install -e Ranger21/.
-
-# files
-RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1CK2wrRqu94kPy3j4lm70UWaojrjgqO1F' -O model.obj
+RUN ./setup.sh
 
 # command to run on container start
 ENTRYPOINT [ "python3", "server.py" ]
